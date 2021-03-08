@@ -1,0 +1,51 @@
+if (rootProject.ext.android.IS_APPLICATION) {
+    apply plugin: 'com.android.application'
+} else {
+    apply plugin: 'com.android.library'
+}
+
+android {
+    compileSdkVersion rootProject.ext.android.COMPILE_SDK_VERSION
+    buildToolsVersion rootProject.ext.android.BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        if (rootProject.ext.android.IS_APPLICATION) {
+            applicationId "com.fei.login"
+        }
+        minSdkVersion rootProject.ext.android.MIN_SDK_VERSION
+        targetSdkVersion rootProject.ext.android.TAR_SDK_VERSION
+        versionCode rootProject.ext.android.VERSION_CODE
+        versionName rootProject.ext.android.VERSION_NAME
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            if (rootProject.ext.android.IS_APPLICATION) {
+                manifest.srcFile 'src/main/manifest/AndroidManifest.xml'
+                java.srcDirs 'src/main/module'
+            }else {
+                manifest.srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation rootProject.ext.dependencies.publicImplementation.CONSTRAINTLAYOUT
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+}

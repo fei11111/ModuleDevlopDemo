@@ -1,0 +1,4 @@
+include ':setting'
+include ':login'
+include ':app'
+rootProject.name = "ModuleDevlopDemo"
